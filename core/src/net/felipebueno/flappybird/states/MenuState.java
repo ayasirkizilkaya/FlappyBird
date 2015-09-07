@@ -24,6 +24,9 @@ public class MenuState extends State {
 	protected void handleInput() {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.justTouched())
 			manager.set(new PlayState(manager));
+
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+			Gdx.app.exit();
 	}
 
 	@Override
