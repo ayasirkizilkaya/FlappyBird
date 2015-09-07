@@ -2,8 +2,6 @@ package net.felipebueno.flappybird.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import net.felipebueno.flappybird.State;
-
 import java.util.Stack;
 
 public class GameStateManager {
@@ -28,11 +26,11 @@ public class GameStateManager {
 	}
 
 	public void update(float dt) {
-		states.peek().update();
+		states.peek().update(dt);
 	}
 
-	public void render(SpriteBatch sb) {
-		states.peek().render(sb);
+	public void render(SpriteBatch batch) {
+		states.peek().render(batch);
 	}
 
 }
