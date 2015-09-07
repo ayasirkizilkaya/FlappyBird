@@ -29,11 +29,11 @@ public class Ground {
 	public void update(float dt) {
 		velocity.add(VELOCITY, 0, 0);
 
-		velocity.scl(dt);
-		position.x = position.x - VELOCITY;
-
-		if (position.x + ground.getWidth() < 0)
-			position.x = initialX;
+//		velocity.scl(dt);
+//		position.x = position.x - VELOCITY;
+//
+//		if (position.x + ground.getWidth() < 0)
+//			position.x = initialX;
 
 		velocity.scl(1 / dt);
 	}
