@@ -22,8 +22,8 @@ public class MenuState extends State {
 
 	@Override
 	protected void handleInput() {
-		if (Gdx.input.isKeyJustPressed(Input.Keys.J))
-			Gdx.app.log(TAG, "handleInput()->J");
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) || Gdx.input.justTouched())
+			manager.set(new PlayState(manager));
 	}
 
 	@Override
@@ -35,8 +35,14 @@ public class MenuState extends State {
 	public void render(SpriteBatch batch) {
 		batch.begin();
 		batch.draw(bg, 0, 0, WIDTH, HEIGHT);
-		batch.draw(playbtn, (Gdx.graphics.getWidth() / 2) - (playbtn.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (playbtn.getHeight() / 2));
+		batch.draw(playbtn, (WIDTH / 2) - (playbtn.getWidth() / 2), (HEIGHT / 2) - (playbtn.getHeight() / 2));
 		batch.end();
+	}
+
+	@Override
+	public void dispose() {
+		bg.dispose();
+		playbtn.dispose();
 	}
 
 }
