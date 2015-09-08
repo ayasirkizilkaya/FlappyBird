@@ -16,6 +16,8 @@ public class MenuState extends State {
 
 	public MenuState(GameStateManager manager) {
 		super(manager);
+		camera.setToOrtho(false, WIDTH / 2, HEIGHT / 2);
+
 		bg = new Texture("bg.png");
 		playbtn = new Texture("playbtn.png");
 	}
@@ -33,14 +35,16 @@ public class MenuState extends State {
 
 	@Override
 	public void update(float dt) {
+		camera.update();
 		handleInput();
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(bg, 0, 0, WIDTH, HEIGHT);
-		batch.draw(playbtn, (WIDTH / 2) - (playbtn.getWidth() / 2), (HEIGHT / 2) - (playbtn.getHeight() / 2));
+		batch.draw(bg, 0, 0);
+		batch.draw(playbtn, camera.position.x - (playbtn.getWidth() / 2), camera.position.y  - (playbtn.getHeight() / 2));
 		batch.end();
 	}
 
