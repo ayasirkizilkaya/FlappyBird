@@ -14,8 +14,6 @@ public class Tube {
 	private static final int TUBE_GAP = 100;
 	private static final int LOWEST_OPENING = 120;
 	public static final int TUBE_WIDTH = 52; // Texture width
-	public static final int TUBES_COUNT = 4;
-	public static final int TUBE_SPACING = 125;
 
 	private final Texture topTube;
 	private final Texture bottomTube;
