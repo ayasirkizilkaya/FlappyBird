@@ -1,11 +1,13 @@
 package net.felipebueno.flappybird.sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
 public class Bird {
 
+	private final String TAG = getClass().getSimpleName();
 	private static final int GRAVITY = -15;
 	private static final int MOVEMENT = 100;
 
@@ -52,6 +54,11 @@ public class Bird {
 
 	public void jump() {
 		velocity.y = 250;
+	}
+
+	public void dispose() {
+		bird.dispose();
+		Gdx.app.log(TAG, "disposed");
 	}
 
 }

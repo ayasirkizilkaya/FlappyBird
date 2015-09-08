@@ -9,13 +9,13 @@ import java.util.Random;
 
 public class Tube {
 
+	private final String TAG = getClass().getSimpleName();
 	private static final int FLUCTUATION = 130;
 	private static final int TUBE_GAP = 100;
 	private static final int LOWEST_OPENING = 120;
 	public static final int TUBE_WIDTH = 52; // Texture width
 	public static final int TUBES_COUNT = 4;
 	public static final int TUBE_SPACING = 125;
-	private final String TAG = getClass().getSimpleName();
 
 	private final Texture topTube;
 	private final Texture bottomTube;
@@ -67,8 +67,12 @@ public class Tube {
 
 	public boolean collides(Rectangle boundsBird) {
 		final boolean isColliding = boundsBird.overlaps(boundsTop) || boundsBird.overlaps(boundsBot);
-		Gdx.app.log(TAG, "colliding->" + isColliding);
 		return isColliding;
 	}
 
+	public void dispose() {
+		topTube.dispose();
+		bottomTube.dispose();
+		Gdx.app.log(TAG, "disposed");
+	}
 }

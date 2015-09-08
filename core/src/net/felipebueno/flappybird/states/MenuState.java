@@ -46,6 +46,7 @@ public class MenuState extends State {
 	public void dispose() {
 		bg.dispose();
 		playbtn.dispose();
+		Gdx.app.log(TAG, "disposed");
 	}
 
 }

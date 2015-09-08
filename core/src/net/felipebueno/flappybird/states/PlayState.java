@@ -17,6 +17,7 @@ import static net.felipebueno.flappybird.sprites.Tube.TUBE_WIDTH;
 
 public class PlayState extends State {
 
+	private final String TAG = getClass().getSimpleName();
 	private final Bird bird;
 	private final Texture bg;
 	private final Texture ground;
@@ -53,7 +54,8 @@ public class PlayState extends State {
 		bird.update(dt);
 		camera.position.x  = bird.getPosition().x + 80;
 
-		for (Tube tube : tubes) {
+		for (int i = 0; i < tubes.size; i++) {
+			Tube tube = tubes.get(i);
 			if (camera.position.x - (camera.viewportWidth / 2) > tube.getPosTopTube().x + tube.getTopTube().getWidth()) {
 				tube.reposition(tube.getPosTopTube().x + ((TUBE_WIDTH + TUBE_SPACING) * TUBES_COUNT));
 			}
@@ -84,7 +86,10 @@ public class PlayState extends State {
 	public void dispose() {
 		bg.dispose();
 		ground.dispose();
-		bird.getTexture().dispose();
+		bird.dispose();
+		for (Tube tube : tubes)
+			tube.dispose();
+		Gdx.app.log(TAG, "disposed");
 	}
 }
 
