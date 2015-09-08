@@ -7,18 +7,19 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
 import net.felipebueno.flappybird.sprites.Bird;
-import net.felipebueno.flappybird.sprites.Ground;
 import net.felipebueno.flappybird.sprites.Tube;
 
 import static net.felipebueno.flappybird.FlappyBird.HEIGHT;
 import static net.felipebueno.flappybird.FlappyBird.WIDTH;
-import static net.felipebueno.flappybird.sprites.Tube.*;
+import static net.felipebueno.flappybird.sprites.Tube.TUBES_COUNT;
+import static net.felipebueno.flappybird.sprites.Tube.TUBE_SPACING;
+import static net.felipebueno.flappybird.sprites.Tube.TUBE_WIDTH;
 
 public class PlayState extends State {
 
 	private final Bird bird;
 	private final Texture bg;
-	private final Ground ground;
+	private final Texture ground;
 	private final Array<Tube> tubes;
 
 	public PlayState(GameStateManager manager) {
@@ -33,8 +34,7 @@ public class PlayState extends State {
 			tubes.add(new Tube(i * (TUBE_SPACING + TUBE_WIDTH)));
 		}
 
-
-		ground = new Ground(camera.position.x - (camera.viewportWidth / 2));
+		ground = new Texture("ground.png");
 
 	}
 
@@ -51,14 +51,16 @@ public class PlayState extends State {
 	public void update(float dt) {
 		handleInput();
 		bird.update(dt);
-		ground.update(dt);
 		camera.position.x  = bird.getPosition().x + 80;
 
 		for (Tube tube : tubes) {
 			if (camera.position.x - (camera.viewportWidth / 2) > tube.getPosTopTube().x + tube.getTopTube().getWidth()) {
 				tube.reposition(tube.getPosTopTube().x + ((TUBE_WIDTH + TUBE_SPACING) * TUBES_COUNT));
 			}
+			if (tube.collides(bird.getBounds()))
+				manager.set(new PlayState(manager));
 		}
+
 
 		camera.update();
 	}
@@ -68,7 +70,7 @@ public class PlayState extends State {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(bg, camera.position.x - (camera.viewportWidth / 2), 0);
-		batch.draw(ground.getTexture(), ground.getPosition().x, 0);
+		batch.draw(ground, camera.position.x - (camera.viewportWidth / 2), 0);
 		batch.draw(bird.getTexture(), bird.getPosition().x, bird.getPosition().y);
 
 		for (Tube tube : tubes) {
@@ -81,7 +83,7 @@ public class PlayState extends State {
 	@Override
 	public void dispose() {
 		bg.dispose();
-		ground.getTexture().dispose();
+		ground.dispose();
 		bird.getTexture().dispose();
 	}
 }
