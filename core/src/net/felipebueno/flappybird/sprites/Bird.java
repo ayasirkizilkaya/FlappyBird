@@ -2,6 +2,7 @@ package net.felipebueno.flappybird.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 
@@ -13,16 +14,18 @@ public class Bird {
 
 	private final Vector3 position;
 	private final Vector3 velocity;
+	private final Texture texture;
 
-	final Texture bird;
+	private Animation birdAnimation;
 
 	private final Rectangle bounds;
 
 	public Bird(int x, int y) {
 		position = new Vector3(x, y, 0);
 		velocity = new Vector3(0, 0, 0);
-		bird = new Texture("bird.png");
-		bounds = new Rectangle(position.x, position.y, bird.getWidth(), bird.getHeight());
+		texture = new Texture("birdanimation.png");
+		birdAnimation = new Animation(new TextureRegion(texture), 3, .5f);
+		bounds = new Rectangle(position.x, position.y, texture.getWidth() / 3, texture.getHeight());
 
 	}
 
@@ -30,8 +33,8 @@ public class Bird {
 		return position;
 	}
 
-	public Texture getTexture() {
-		return bird;
+	public TextureRegion getTexture() {
+		return birdAnimation.getFrame();
 	}
 
 	public Rectangle getBounds() {
@@ -39,6 +42,7 @@ public class Bird {
 	}
 
 	public void update(float dt) {
+		birdAnimation.update(dt);
 		if (position.y > 0)
 			velocity.add(0, GRAVITY, 0);
 
@@ -57,7 +61,7 @@ public class Bird {
 	}
 
 	public void dispose() {
-		bird.dispose();
+		texture.dispose();
 		Gdx.app.log(TAG, "disposed");
 	}
 
