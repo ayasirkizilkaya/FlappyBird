@@ -2,6 +2,7 @@ package net.felipebueno.flappybird;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -16,11 +17,16 @@ public class FlappyBird extends Game {
 
 	private SpriteBatch batch;
 	private GameStateManager manager;
+	private Music music;
 
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		manager = new GameStateManager();
+		music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+		music.setLooping(true);
+		music.setVolume(0.1f);
+		music.play();
 		Gdx.gl.glClearColor(0, .2f, 0, 1);
 		manager.push(new MenuState(manager));
 	}
@@ -31,5 +37,11 @@ public class FlappyBird extends Game {
 
 		manager.update(Gdx.graphics.getDeltaTime());
 		manager.render(batch);
+	}
+
+	@Override
+	public void dispose() {
+		super.dispose();
+		music.dispose();
 	}
 }
