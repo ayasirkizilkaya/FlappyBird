@@ -41,8 +41,10 @@ public class PlayState extends State {
 
 	@Override
 	protected void handleInput() {
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE))
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			manager.set(new MenuState(manager));
+			return;
+		}
 
 		if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.J))
 			bird.jump();
@@ -59,10 +61,11 @@ public class PlayState extends State {
 			if (camera.position.x - (camera.viewportWidth / 2) > tube.getPosTopTube().x + tube.getTopTube().getWidth()) {
 				tube.reposition(tube.getPosTopTube().x + ((TUBE_WIDTH + TUBE_SPACING) * TUBES_COUNT));
 			}
-			if (tube.collides(bird.getBounds()))
+			if (tube.collides(bird.getBounds())) {
 				manager.set(new PlayState(manager));
+				return;
+			}
 		}
-
 
 		camera.update();
 	}
